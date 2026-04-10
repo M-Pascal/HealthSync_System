@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("doctor");
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
   };
 
   const handleSignIn = () => {
-    // Redirect user based on selected role
+    // Allow first-time access without credential checks.
     if (role === "administrator") {
       window.location.href = "/admin";
     } else if (role === "doctor") {
@@ -17,9 +17,12 @@ export default function Login() {
     } else if (role === "receptionist") {
       window.location.href = "/Reception";
     } else {
-      // Default redirect if role is not selected
-      window.location.href = "/"; // Change the default redirect URL if needed
+      window.location.href = "/Dashboard";
     }
+  };
+
+  const handleContinueWithoutAuth = () => {
+    window.location.href = "/Dashboard";
   };
 
   return (
@@ -119,6 +122,16 @@ export default function Login() {
               className="flex w-full justify-center rounded-md bg-[#00aeef] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#36799e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Sign in
+            </button>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              onClick={handleContinueWithoutAuth}
+              className="flex w-full justify-center rounded-md border border-[#00aeef] bg-transparent px-3 py-1.5 text-sm font-semibold leading-6 text-[#00aeef] shadow-sm hover:bg-[#00aeef] hover:text-white"
+            >
+              Continue without authentication
             </button>
           </div>
         </form>
